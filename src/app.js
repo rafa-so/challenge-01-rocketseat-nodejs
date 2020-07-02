@@ -5,8 +5,19 @@ const { uuid } = require("uuidv4");
 
 const app = express();
 
+function logRequests(request, reponse, next) {
+  const { method, url } = request;
+
+  const logLabel = `[${method.toUpperCase()}] ${url}`;
+
+  console.log(logLabel);
+
+  return next();
+}
+
 app.use(express.json());
 app.use(cors());
+app.use(logRequests);
 
 const repositories = [];
 
